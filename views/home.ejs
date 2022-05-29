@@ -1,10 +1,22 @@
 <link rel="stylesheet" href="/css/home.css">
 <h1>this the vivid home page</h1>
 
-<section id = "feed=posts">
-    <h3>Posts</h3>
-    <form action="" id = "new-post-from" method="post">
-        <textarea name="content" id="new-post-content" cols="30" rows="5" placeholder="Type here..."></textarea>
-        <input type="submit" value="Post">
-    </form>
-</section>
+<% if(locals.user) { %>
+
+    <section id = "feed-posts">
+        <h3>Posts</h3>
+        <form action="/posts/create" id = "new-post-from" method="post">
+            <textarea name="content" id="new-post-content" cols="30" rows="5" placeholder="Type here..."></textarea>
+            <input type="submit" value="Post">
+        </form>
+    </section>
+
+<% } %>
+
+<div id = "posts-list-container">
+    <% for(let i of posts) {%>
+        <li>
+            <%= i.content %>
+        </li>
+    <%}%>
+</div>

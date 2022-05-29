@@ -1,7 +1,20 @@
+const Post = require('../models/posts');
+
 module.exports.home = function(req, res){
     //console.log(req.cookies);
-    return res.render('home', {
-        title: 'shashanks vivid '
-    })
+
+    Post.find({}, function(err, posts){
+        if(err){
+            console.log('error in finding the posts', err);
+            return;
+        }
+        console.log(posts);
+        return res.render('home', {
+            title: 'shashanks vivid | Home ',
+            posts: posts
+        });
+    });
+
+    
 
 }
