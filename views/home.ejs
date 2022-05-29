@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="/css/home.css">
 <h1>this the vivid home page</h1>
 
-<% if(locals.user) { %>
+ <% if(locals.user) { %> 
 
     <section id = "feed-posts">
         <h3>Posts</h3>
@@ -11,12 +11,24 @@
         </form>
     </section>
 
+    
 <% } %>
+
 
 <div id = "posts-list-container">
     <% for(let i of posts) {%>
-        <li>
-            <%= i.content %>
-        </li>
+        <ul>
+            <li>
+                <p>
+                    <%= i.content %>
+                    <br>
+                    <small>
+                        <%= i.user.name %>
+                    </small>
+                </p>
+                
+            </li>
+        </ul>
+        
     <%}%>
 </div>
