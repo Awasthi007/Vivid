@@ -6,12 +6,11 @@
     <section id = "feed-posts">
         <h3>Posts</h3>
         <form action="/posts/create" id = "new-post-from" method="post">
-            <textarea name="content" id="new-post-content" cols="30" rows="5" placeholder="Type here..."></textarea>
+            <textarea name="content" id="new-post-content" cols="30" rows="5" placeholder="Type here..." required></textarea>
             <input type="submit" value="Post">
         </form>
     </section>
-
-    
+   
 <% } %>
 
 
@@ -26,9 +25,33 @@
                         <%= i.user.name %>
                     </small>
                 </p>
+                <div class="post-comments">
+                    <% if(locals.user) { %>
+                        <form action="/comments/create" method="post">
+                            <input type="text" name="content" placeholder="Type here to add comment..." required>
+                            <input type="hidden" name="post" value="<%= i._id %>">
+                            <input type="submit" value = "Add comment">
+                        </form>
+                    <%}%>
+
+                    <div class="post-comments-list">
+                        <ul id="post-comments-<%= i._id %>">
+                            <% for (let comment of i.comments) {%>
+                                <p>
+                                    <%= comment.content %>
+                                    <br>
+                                    <small>
+                                        <%= comment.user.name %>
+                                    </small>
+                                </p>
+                            <%}%>
+                        </ul>
+                    </div>
+                </div>
                 
             </li>
         </ul>
         
     <%}%>
 </div>
+
