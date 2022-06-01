@@ -5,10 +5,11 @@ const passport = require('passport');
 
 const users_controller = require('../controllers/users_controller');
 
-router.get('/profile',passport.checkAuthentication, users_controller.profile);
+router.get('/profile/:id',passport.checkAuthentication, users_controller.profile);
 router.get('/sign-up', users_controller.signUp);
 router.get('/sign-in', users_controller.signIn);
 router.post('/create', users_controller.create);
+router.post('/update/:id', passport.checkAuthentication,users_controller.update)
 
 // use passport as a middleware to authenticate
 router.post('/create-session', 
