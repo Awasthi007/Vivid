@@ -1,4 +1,6 @@
 const User = require('../models/user');
+const fs = require('fs');
+const path = require('path');
 
 module.exports.profile = function (req, res){
     User.findById(req.params.id, function(err, user){
@@ -81,15 +83,51 @@ module.exports.destroySession = function(req,res){  // modified in the latest ve
    
 }
 
-module.exports.update = function(req, res){
+// module.exports.update = function(req, res){
+//     if(req.user.id = req.params.id){
+//         User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
+//             if(err){
+//                 console.log('error in creating user', err);
+//             }
+//             req.flash('success', 'Updated Successfully');
+//             res.redirect('back');
+//         });
+//     } else {
+//         console.log('here');
+//         return res.status(401).send('Unauthorized');
+//     }
+// }
+
+module.exports.update = async function(req, res){
     if(req.user.id = req.params.id){
-        User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
-            if(err){
-                console.log('error in creating user', err);
-            }
-            req.flash('success', 'Updated Successfully');
+        try{
+           let user = await User.findByIdAndUpdate(req.params.id);
+           User.uploadedAvatar(req, res, function(err){
+                if(err){
+                    console.log('********multer error', err);
+                    res.redirect('back');
+                }
+                console.log(req.file);
+                user.name = req.body.name;
+                user.email = req.body.email;
+                console.log(req.body.email);
+
+                if(req.file){
+                    // if avatar is already there
+                    if(user.avatar && fs.existsSync(path.join(__dirname + '..', user.avatar))){
+                        fs.unlinkSync(path.join(__dirname + '..', user.avatar));
+                    }
+                    // this is saving the path of the uploaded file into the avatar field in the user
+                    user.avatar = User.avatarPath + '/' + req.file.filename;
+                }
+                user.save();
+                return res.redirect('back');
+           });
+        }catch(e){
+            console.log('error in users_contr', e);
             res.redirect('back');
-        });
+        }
+       
     } else {
         console.log('here');
         return res.status(401).send('Unauthorized');

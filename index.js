@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 
 // for creating and altering -- dealing with the cookies
 
@@ -31,7 +32,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(cookieParser());
 
-
+// make the upload path available path to browser
+app.use('/uploads', express.static(path.join(__dirname + '/uploads')));
 
 // instruct to use express layouts
 app.use(expressLayouts);
