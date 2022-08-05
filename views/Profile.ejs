@@ -3,10 +3,10 @@
         This is the profile page
     </h1>
 
-    <img src="<%= user.avatar %>" alt="<%= user.name %>" width="300px">
+    <img id="profile_image" src="<%= user.avatar %>" alt="<%= user.name %>" width="300px">
 
-   <p><%= profile_user.name %></p>
-   <p><%= profile_user.email %></p>
+   <p class="user_details"><%= profile_user.name %></p>
+   <p class="user_details"><%= profile_user.email %></p>
 
    <% if(locals.user.id == profile_user.id) {%>
         <!-- if user matches then show the form else show profile info -->

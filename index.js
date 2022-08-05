@@ -2,6 +2,7 @@ const express = require('express');
 const env = require('./config/environment');
 const path = require('path');
 
+
 // for creating and altering -- dealing with the cookies
 
 const cookieParser = require('cookie-parser');
@@ -29,13 +30,19 @@ chatServer.listen(5000);
 console.log('chat server is listening on port 5000');
 
 
-app.use(sassMiddleware({
-    src: path.join(__dirname, env.asset_path, 'scss'),
-    dest: path.join(__dirname, env.asset_path, 'css'),
-    debug: true,
-    outputStyle: 'extended',
-    prefix: '/css'
-}));
+if(env.name == 'development'){
+    app.use(sassMiddleware({
+        src: path.join(__dirname, env.asset_path, 'scss'),
+        dest: path.join(__dirname, env.asset_path, 'css'),
+        debug: true,
+        outputStyle: 'extended',
+        prefix: '/css'
+    }));
+}
+    
+    
+
+
 
 // body parser for dealing with input data
 const bodyParser = require('body-parser');
@@ -55,7 +62,7 @@ app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
 
 
-app.use(express.static(env.asset_path));
+app.use(express.static('assets'));
 
 
 // setting the view engine
