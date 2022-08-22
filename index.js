@@ -1,6 +1,8 @@
 const express = require('express');
 const env = require('./config/environment');
-const logger = require('morgan')
+const logger = require('morgan');
+
+ 
 const path = require('path');
 
 
@@ -10,7 +12,11 @@ const cookieParser = require('cookie-parser');
 const port = 8000;
 const expressLayouts = require('express-ejs-layouts');
 
+
 const app = express();
+
+require('./config/view-helpers')(app); // telling to use helper
+
 const db = require('./config/mongoose');
 const session = require('express-session');
 const passport = require('passport');
