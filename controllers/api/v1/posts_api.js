@@ -14,7 +14,7 @@ module.exports.index = async function(req, res){
         })
 
     return res.json(200, {
-        message: "List of post",
+        message: "List of post",f
         posts : posts
     });
 }
